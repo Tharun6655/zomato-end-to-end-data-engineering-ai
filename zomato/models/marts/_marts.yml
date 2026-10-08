@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: fct_orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_id
+
+      - name: order_status
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - 'Delivered'
+                  - 'Cancelled'
+                  - 'Refunded'
